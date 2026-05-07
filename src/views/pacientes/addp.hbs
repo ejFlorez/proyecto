@@ -1,0 +1,123 @@
+<style>
+  .form-wrapper {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(26,107,90,0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .form-card-header {
+    background: linear-gradient(135deg, #2d7a4f, #3da068);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .form-card-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 20px;
+    background: white;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .form-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin: 0 auto 0.75rem;
+  }
+
+  .form-card-title {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .form-card-body {
+    padding: 2rem;
+  }
+
+  .form-footer {
+    text-align: center;
+    padding: 1rem 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .form-footer a {
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .btn-full {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+</style>
+
+<div class="form-wrapper">
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="form-icon">👤</div>
+      <h4 class="form-card-title">Crear Paciente</h4>
+    </div>
+
+    <div class="form-card-body">
+
+      {{#if error}}
+        <div class="alert alert-danger d-flex align-items-center gap-2 mb-3" role="alert">
+          ⚠️ {{error}}
+        </div>
+      {{/if}}
+
+      <form action="/pacientes/addp" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Nombre completo</label>
+          <input type="text" name="name" class="form-control" placeholder="Ej: Erick Florez" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Número de Identificación</label>
+          <input type="text" name="numeroid" class="form-control" placeholder="Ej: 1044620138" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Edad</label>
+          <input type="number" name="age" class="form-control" placeholder="Ej: 25" required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Contraseña</label>
+          <input type="password" name="password" class="form-control" placeholder="Crea una contraseña" required>
+        </div>
+        <button type="submit" class="btn btn-success btn-full">Registrar Paciente</button>
+      </form>
+    </div>
+
+    <div class="form-footer">
+      ¿Ya tienes cuenta? <a href="/login">Iniciar sesión</a>
+    </div>
+  </div>
+</div>

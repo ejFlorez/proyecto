@@ -1,0 +1,123 @@
+<style>
+  .hero-section {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 3rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+  }
+
+  .feature-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,107,90,0.1);
+  }
+
+  .feature-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-text {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-cta {
+    padding: 0.75rem 2rem;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    margin: 1.5rem auto;
+  }
+</style>
+
+<div class="hero-section">
+  <div class="hero-badge">🏥 Sistema Médico</div>
+  <h1 class="hero-title">Sistema de<br>Citas Médicas</h1>
+  <div class="divider"></div>
+  <p class="hero-subtitle">Gestiona tus citas de forma sencilla, rápida y segura desde cualquier lugar.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <div class="feature-text">Registrar pacientes</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-text">Agendar citas</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-text">Consultar citas</div>
+    </div>
+  </div>
+
+  <div class="cta-buttons">
+    {{#if user}}
+      <a href="/citas/add" class="btn btn-primary btn-cta">Agendar Cita</a>
+      <a href="/citas/list" class="btn btn-success btn-cta">Ver Mis Citas</a>
+    {{else}}
+      <a href="/login" class="btn btn-primary btn-cta">Iniciar Sesión</a>
+      <a href="/pacientes/addp" class="btn btn-success btn-cta">Crear Paciente</a>
+    {{/if}}
+  </div>
+</div>

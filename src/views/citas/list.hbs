@@ -1,0 +1,186 @@
+<style>
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .list-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--dark);
+    margin: 0;
+  }
+
+  .list-header p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0.2rem 0 0;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+  }
+
+  .empty-state .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .empty-state h5 {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .badge-especialidad {
+    background: var(--accent);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.83rem;
+    font-weight: 500;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-box {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    text-align: center;
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  .modal-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .modal-box h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-box p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+</style>
+
+<div class="list-header">
+  <div>
+    <h2>Mis Citas</h2>
+    <p>Historial y próximas citas agendadas</p>
+  </div>
+  <a href="/citas/add" class="btn btn-primary">+ Agendar Cita</a>
+</div>
+
+{{#if citas.length}}
+<div class="card">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>Paciente</th>
+            <th>Especialidad</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th style="text-align:center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each citas}}
+          <tr>
+            <td><strong>{{name}}</strong></td>
+            <td><span class="badge-especialidad">{{especialidad}}</span></td>
+            <td>{{fecha}}</td>
+            <td>{{hora}}</td>
+            <td style="text-align:center">
+              <a href="/citas/edit/{{id}}" class="btn btn-warning btn-sm me-1">Editar</a>
+              <button class="btn btn-danger btn-sm" onclick="abrirModal('/citas/delete/{{id}}')">Eliminar</button>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{{else}}
+<div class="card">
+  <div class="card-body">
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h5>No tienes citas agendadas</h5>
+      <p>Agenda tu primera cita médica ahora mismo</p>
+      <a href="/citas/add" class="btn btn-primary mt-2">+ Agendar Cita</a>
+    </div>
+  </div>
+</div>
+{{/if}}
+
+<!-- Modal de confirmación -->
+<div class="modal-overlay" id="modalEliminar">
+  <div class="modal-box">
+    <div class="modal-icon">🗑️</div>
+    <h5>Eliminar cita</h5>
+    <p>¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+      <a id="btnConfirmarEliminar" href="#" class="btn btn-danger">Sí, eliminar</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function abrirModal(url) {
+    document.getElementById('btnConfirmarEliminar').setAttribute('href', url);
+    document.getElementById('modalEliminar').classList.add('active');
+  }
+
+  function cerrarModal() {
+    document.getElementById('modalEliminar').classList.remove('active');
+  }
+
+  document.getElementById('modalEliminar').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+  });
+</script>
